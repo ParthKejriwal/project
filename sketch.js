@@ -1,54 +1,72 @@
-const Engine = Matter.Engine;
-const World= Matter.World;
-const Bodies = Matter.Bodies;
-var engine, world;
 
-var ground;
+// CREATE GLOBAL VARIABLES
+// For Engine, World, Bodies and any other that you have in mind to make your coding life easier.
+// remember to create an array
+const Engine=Matter.Engine;
+const World=Matter.World;
+const Bodies=Matter.Bodies;
 
-var stick1,stick2,stick3,stick4,stick5,stick6,stick7,stick8,stick9;
+var engine,world;
+//var boxes;
+ 
+var boxes = [];
+var gSlider;
+ 
+ //var click;
+
+
 function setup() {
-  var canvas=createCanvas(400,400);
-  engine = Engine.create();
-    world = engine.world;
-  stick1=new Sticks(20,360,20,100);
-  stick2=new Sticks(380,360,20,100);
-  stick3=new Sticks(60,300,100,20);
-  stick4=new Sticks(340,300,100,20);
-  stick5=new Sticks(100,240,20,100);
-  stick6=new Sticks(300,240,20,100);
-  stick7=new Sticks(140,180,130,20);
-  stick8=new Sticks(260,180,130,20);
-  stick9=new Sticks(200,130,30,80);
- // ground=new Ground(200,395,400,20);
- //ground=Bodies.rectangle(200,395,400,10);
- //World.add(world,ground);
-}
+    createCanvas(600, 600);
 
-function draw() {
-  background(0);  
-  Engine.update(engine);
- // rectMode(CENTER);
- // rect(ground.position.x,ground.position.y,400,10);
-// ground.display();
-  stick1.display();
-  stick2.display();
-  stick3.display();
-  stick4.display();
-  stick5.display();
-  stick6.display();
-  stick7.display();
-  stick8.display();
-  stick9.display();
-  circle(200,67,50);
-  square(110,147,45);
-  square(288,147,45);
-  rect(110,114,20,20);
-  rect(288,114,20,20);
-  circle(200,395,150);
-  square(200,230,40);
-  rect(55,215,15,150);
-  rect(350,215,15,150);
-  rect(55,130,30,20);
-  rect(350,130,30,20);
-  drawSprites();
+    // Create an instance of Engine, World
+    engine=Engine.create();
+    world = engine.world;
+    Engine.run(engine);
+ 
+    // A slider is already created for you here. This slider will dictate the gravity of the world
+    gSlider = createSlider(0, 100, 50);
+    gSlider.position(40, 575);
+    gSlider.input = map(engine.world.gravity, gSlider.min, gSlider.max, 0, 1);
+    
+    // Create a ground rectangle that would hold all the boxes and add it to the world.*/
+    var options={isStatic:true}
+    ground=Bodies.rectangle(300,560,600,20,options);
+    World.add(world,ground);
+
 }
+ 
+function mousePressed() {
+    if (mouseY<570) {
+        // Every time a mouse press occures create a new box.
+        boxes.push(new Boxes(mouseX, mouseY, random(10, 40), random(10, 40)));
+       // boxes=new Boxes(mouseX,mouseY,random(5,20),random(5,20));
+       // World.add(world,boxes);
+    }
+
+}
+ 
+function draw() {
+    // Draw all the elements including the slider that 
+    background(51);
+//createSlider();
+
+   
+    // This is the value of your gravity. You can optionally show it to the viewer.
+     var fVal = gSlider.value();
+   text("Gravity: "+fVal,200,590);
+
+ 
+    // Use a for loop to show all the boxes
+
+   // mousePressed();
+   // rectMode(CENTER);
+   fill(200);
+   for (var i = 0; i < boxes.length; i++){
+     boxes[i].display();
+     }
+     console.log(ground);
+     rectMode(CENTER);
+     rect(ground.position.x, ground.position.y, width, 10);
+  // drawSprites();
+}
+ 
