@@ -1,7 +1,5 @@
 
 // CREATE GLOBAL VARIABLES
-// For Engine, World, Bodies and any other that you have in mind to make your coding life easier.
-// remember to create an array
 const Engine=Matter.Engine;
 const World=Matter.World;
 const Bodies=Matter.Bodies;
@@ -39,17 +37,12 @@ function mousePressed() {
     if (mouseY<570) {
         // Every time a mouse press occures create a new box.
         boxes.push(new Boxes(mouseX, mouseY, random(10, 40), random(10, 40)));
-       // boxes=new Boxes(mouseX,mouseY,random(5,20),random(5,20));
-       // World.add(world,boxes);
     }
 
 }
  
 function draw() {
-    // Draw all the elements including the slider that 
     background(51);
-//createSlider();
-
    
     // This is the value of your gravity. You can optionally show it to the viewer.
      var fVal = gSlider.value();
@@ -57,16 +50,11 @@ function draw() {
 
  
     // Use a for loop to show all the boxes
-
-   // mousePressed();
-   // rectMode(CENTER);
    fill(200);
    for (var i = 0; i < boxes.length; i++){
      boxes[i].display();
      }
      console.log(ground);
      rectMode(CENTER);
-     rect(ground.position.x, ground.position.y, width, 10);
-  // drawSprites();
+     rect(ground.position.x, ground.position.y, width, 10);  
 }
- 
